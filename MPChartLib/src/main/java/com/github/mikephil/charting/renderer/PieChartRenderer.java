@@ -513,7 +513,7 @@ public class PieChartRenderer extends DataRenderer {
 
                         mValuePaint.setTextAlign(Align.RIGHT);
 
-                        if(drawXOutside)
+                        if (drawXOutside)
                             mEntryLabelsPaint.setTextAlign(Align.RIGHT);
 
                         labelPtx = pt2x - offset;
@@ -523,7 +523,7 @@ public class PieChartRenderer extends DataRenderer {
                         pt2y = pt1y;
                         mValuePaint.setTextAlign(Align.LEFT);
 
-                        if(drawXOutside)
+                        if (drawXOutside)
                             mEntryLabelsPaint.setTextAlign(Align.LEFT);
 
                         labelPtx = pt2x + offset;
@@ -557,8 +557,7 @@ public class PieChartRenderer extends DataRenderer {
                         }
                     } else if (drawYOutside) {
 
-                        drawValue(c, formatter, value, entry, 0, labelPtx, labelPty + lineHeight / 2.f, dataSet
-                                .getValueTextColor(j));
+                        drawValue(c, formatter, value, entry, 0, labelPtx, labelPty + lineHeight / 2.f, dataSet.getValueTextColor(j));
                     }
                 }
 
@@ -569,22 +568,34 @@ public class PieChartRenderer extends DataRenderer {
 
                     mValuePaint.setTextAlign(Align.CENTER);
 
+                    int size = entry.getLabel().length();
                     // draw everything, depending on settings
                     if (drawXInside && drawYInside) {
 
-                        drawValue(c, formatter, value, entry, 0, x, y, dataSet.getValueTextColor(j));
+                        if (mChart.getLimitXLableSizeInSlice() && size > ((labelRadius * sliceAngle * Utils.FDEG2RAD) + 10)) {
+                        } else {
+                            drawValue(c, formatter, value, entry, 0, x, y, dataSet.getValueTextColor(j));
+                        }
 
                         if (j < data.getEntryCount() && entry.getLabel() != null) {
-                            drawEntryLabel(c, entry.getLabel(), x, y + lineHeight);
+                            if (mChart.getLimitXLableSizeInSlice() && size > ((labelRadius * sliceAngle * Utils.FDEG2RAD) + 10)) {
+                            } else {
+                                drawEntryLabel(c, entry.getLabel(), x, y + lineHeight);
+                            }
                         }
 
                     } else if (drawXInside) {
                         if (j < data.getEntryCount() && entry.getLabel() != null) {
-                            drawEntryLabel(c, entry.getLabel(), x, y + lineHeight / 2f);
+                            if (mChart.getLimitXLableSizeInSlice() && size > ((labelRadius * sliceAngle * Utils.FDEG2RAD) + 10)) {
+                            } else {
+                                drawEntryLabel(c, entry.getLabel(), x, y + lineHeight / 2f);
+                            }
                         }
                     } else if (drawYInside) {
-
-                        drawValue(c, formatter, value, entry, 0, x, y + lineHeight / 2f, dataSet.getValueTextColor(j));
+                        if (mChart.getLimitXLableSizeInSlice() && size > ((labelRadius * sliceAngle * Utils.FDEG2RAD) + 10)) {
+                        } else {
+                            drawValue(c, formatter, value, entry, 0, x, y + lineHeight / 2f, dataSet.getValueTextColor(j));
+                        }
                     }
                 }
 
@@ -659,6 +670,7 @@ public class PieChartRenderer extends DataRenderer {
     }
 
     protected Path mDrawCenterTextPathBuffer = new Path();
+
     /**
      * draws the description text in the center of the pie chart makes most
      * sense when center-hole is enabled
@@ -732,6 +744,7 @@ public class PieChartRenderer extends DataRenderer {
     }
 
     protected RectF mDrawHighlightedRectF = new RectF();
+
     @Override
     public void drawHighlighted(Canvas c, Highlight[] indices) {
 
@@ -751,7 +764,7 @@ public class PieChartRenderer extends DataRenderer {
                 : 0.f;
 
         final RectF highlightedCircleBox = mDrawHighlightedRectF;
-        highlightedCircleBox.set(0,0,0,0);
+        highlightedCircleBox.set(0, 0, 0, 0);
 
         for (int i = 0; i < indices.length; i++) {
 

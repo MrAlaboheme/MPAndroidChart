@@ -727,4 +727,14 @@ public class PieChart extends PieRadarChartBase<PieData> {
         }
         super.onDetachedFromWindow();
     }
+
+    private Boolean limitXLableSizeInSlice = false;
+
+    public Boolean getLimitXLableSizeInSlice() {
+        return limitXLableSizeInSlice;
+    }
+
+    public void setLimitXLableSizeInSlice(Boolean limitXLableSizeInSlice) {
+        this.limitXLableSizeInSlice = limitXLableSizeInSlice;
+    }
 }
